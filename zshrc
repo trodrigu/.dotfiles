@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/trodrigu/.oh-my-zsh
+export ZSH=/Users/thomas/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -80,10 +80,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias f="open -a finder"
-alias ma="mvim"
-# Rbenv path
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+alias m="mvim"
+
+# Mactex path
+eval `/usr/libexec/path_helper -s`
 
 # Sublime alias
 alias sub="subl"
@@ -93,3 +93,6 @@ if which ruby >/dev/null && which gem >/dev/null; then
   PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
+# Rbenv path, make sure this is below gems path
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
