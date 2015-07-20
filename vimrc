@@ -26,9 +26,14 @@ Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 
 Plugin 'groenewege/vim-less'
 
-Bundle "wookiehangover/jshint.vim"
+"Jshint for vim
+"Bundle "wookiehangover/jshint.vim"
 
-Plugin 'jelera/vim-javascript-syntax'
+"Js syntax
+"Plugin 'jelera/vim-javascript-syntax'
+
+"Recommended js syntax to use with jsx lint
+Plugin 'pangloss/vim-javascript'
 
 "Plugin 'terryma/vim-multiple-cursors'
 Plugin 'kchmck/vim-coffee-script'
@@ -45,6 +50,12 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'junegunn/goyo.vim'
 
 Plugin 'junegunn/limelight.vim'
+
+"Jsx lint
+Plugin 'mxw/vim-jsx'
+
+"Nerd commenter
+Plugin 'scrooloose/nerdcommenter'
 
 
 " All of your Plugins must be added before the following line
