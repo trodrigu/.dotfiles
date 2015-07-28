@@ -27,7 +27,7 @@ Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'groenewege/vim-less'
 
 "Jshint for vim
-"Bundle "wookiehangover/jshint.vim"
+"Bundle 'wookiehangover/jshint.vim'
 
 "Js syntax
 "Plugin 'jelera/vim-javascript-syntax'
@@ -57,6 +57,17 @@ Plugin 'mxw/vim-jsx'
 "Nerd commenter
 Plugin 'scrooloose/nerdcommenter'
 
+"Rails vim
+Plugin 'tpope/vim-rails'
+
+"Vim snippets and snip-mate
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+
+"ES6 snippets
+Plugin 'isRuslan/vim-es6'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

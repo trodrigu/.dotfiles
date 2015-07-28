@@ -51,7 +51,10 @@ plugins=(git)
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
-
+#export PATH="/usr/local/share/npm/bin:$PATH"
+export PATH="/usr/local/lib/node_modules:$PATH"
+export NVM_DIR=$(brew --prefix)/var/nvm
+source $(brew --prefix nvm)/nvm.sh
 export EDITOR=vim
 source $ZSH/oh-my-zsh.sh
 
