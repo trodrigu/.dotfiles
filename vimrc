@@ -69,6 +69,9 @@ Plugin 'honza/vim-snippets'
 "ES6 snippets
 Plugin 'isRuslan/vim-es6'
 
+"Mustache/Handlebars mode from vim
+Plugin 'mustache/vim-mustache-handlebars'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -144,3 +147,18 @@ set noswapfile
 "Automatic limelight with goyo
 autocmd User GoyoEnter Limelight
 autocmd User GoyoLeave Limelight!
+
+"Mustache abbr
+let g:mustache_abbreviations = 1
+
+"Gvimdiff shortcut
+map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
+map <silent> <leader>3 :diffget 3><CR> :diffupdate<CR>
+map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
+
+"ESC shortcut
+imap jj <Esc>
+
+"Ignore node_modules and bower_components with command t
+set wildignore+=node_modules
+set wildignore+=bower_components

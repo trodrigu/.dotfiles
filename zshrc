@@ -45,9 +45,12 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git history frontend-search)
 
 # User configuration
+
+# Install z
+. "/Users/thomas/.oh-my-zsh/plugins/z/z.sh"
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -57,7 +60,7 @@ export NVM_DIR=$(brew --prefix)/var/nvm
 source $(brew --prefix nvm)/nvm.sh
 export EDITOR=vim
 source $ZSH/oh-my-zsh.sh
-
+export PATH="/usr/local/apache-maven-3.3.3/bin:$PATH"
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -84,6 +87,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias f="open -a finder"
 alias m="mvim"
+alias tx="open -a /Applications/TeX/TeXShop.App"
 
 # Mactex path
 eval `/usr/libexec/path_helper -s`
