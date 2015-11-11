@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/thomas/.oh-my-zsh
+export ZSH=/Users/trodrigu/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -50,7 +50,7 @@ plugins=(git history frontend-search)
 # User configuration
 
 # Install z
-. "/Users/thomas/.oh-my-zsh/plugins/z/z.sh"
+. "/Users/trodrigu/.oh-my-zsh/plugins/z/z.sh"
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -58,18 +58,19 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH="/usr/local/lib/node_modules:$PATH"
 export NVM_DIR=$(brew --prefix)/var/nvm
 source $(brew --prefix nvm)/nvm.sh
-export EDITOR=vim
+export EDITOR=nvim
 source $ZSH/oh-my-zsh.sh
 export PATH="/usr/local/apache-maven-3.3.3/bin:$PATH"
+export PATH="/Library/Python/2.7/bin"
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+ if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='vim'
+ else
+   export EDITOR='nvim'
+ fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -103,3 +104,33 @@ fi
 # Rbenv path, make sure this is below gems path
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+
+export PATH="$HOME/.bin:$PATH"
+eval "$(rbenv init - --no-rehash zsh)"
+
+# Hub path
+eval "$(hub alias -s)"
+
+# Set environment variable for true colour in Neovim
+#alias v='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
+#alias vim='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
+alias nv='nvim'
+
+# Fuzzy finder
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+
+# Iterm2 shell integration
+source ~/.iterm2_shell_integration.`basename $SHELL`
+
+# Docker
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/trodrigu/.docker/machine/machines/dev"
+export DOCKER_MACHINE_NAME="dev"
+# Run this command to configure your shell:
+# eval "$(docker-machine env dev)"
+
+# Merge conflicts
+alias fix='git diff --name-only | uniq | xargs $EDITOR'
