@@ -3,6 +3,7 @@ filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.config/nvim/bundle/Vundle.vim
+set rtp+=~/.fzf
 call vundle#begin('~/.config/nvim/bundle')
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -112,12 +113,7 @@ filetype plugin indent on    " required
 " :PluginList       - lists configured plugins
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-syntax enable
-syntax on
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal see :h vundle for more details or wiki for FAQ Put your non-Plugin stuff after this line syntax enable syntax on
 set nu
 set t_Co=256
 "Search
@@ -153,7 +149,7 @@ set mouse=a
 set background=dark
 colorscheme base16-default
 "colorscheme solarized
-"syntax enable
+syntax enable
 
 "Comment the above and set the below for light
 "set background=light
@@ -230,6 +226,20 @@ let g:netrw_liststyle=3
 
 "Devicons with Airline
 let g:airline_powerline_fonts=1
+
+
+command! -nargs=1 Locate call fzf#run(
+      \ {'source': 'locate <q-args>', 'sink': 'e', 'options': '-m'})
+
+"remap leader
+let mapleader = ","
+
+nnoremap <silent> <Leader>v :call fzf#run({
+      \ 'right': winwidth('.') / 2,
+      \ 'sink': 'vertical botright split' })<CR>
+
+nnoremap <silent> <Leader>f :call fzf#run({
+      \ 'sink': 'edit' })<CR>
 
 "if ! has('gui_running')
   "set ttimeoutlen=10
