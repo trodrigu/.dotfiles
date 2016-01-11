@@ -383,3 +383,6 @@ function! PromoteToLet()
 endfunction
 :command! PromoteToLet :call PromoteToLet()
 :map <leader>p :PromoteToLet<cr>
+
+" Dash mapping
+:nmap <silent> <leader>d <Plug>DashSearch
