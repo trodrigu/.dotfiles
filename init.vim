@@ -36,7 +36,7 @@ Plugin 'groenewege/vim-less'
 "Recommended js syntax to use with jsx lint
 Plugin 'pangloss/vim-javascript'
 
-"Plugin 'terryma/vim-multiple-cursors'
+Plugin 'terryma/vim-multiple-cursors'
 Plugin 'kchmck/vim-coffee-script'
 
 Plugin 'wavded/vim-stylus'
@@ -99,6 +99,9 @@ Plugin 'ryanoasis/vim-devicons'
 
 "Enhance netrw
 Plugin 'tpope/vim-vinegar'
+
+"Elm!!
+Plugin 'lambdatoast/elm.vim'
 
 "Vim solarized
 "Plugin 'altercation/vim-colors-solarized'
