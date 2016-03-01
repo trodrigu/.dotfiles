@@ -1,122 +1,117 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.config/nvim/bundle/Vundle.vim
-set rtp+=~/.fzf
-call vundle#begin('~/.config/nvim/bundle')
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+if has('vim_starting')
+  " Required:
+  set runtimepath+=/Users/thomas/.config/nvim/bundle/neobundle.vim/
+endif
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+call neobundle#begin(expand('/Users/thomas/.config/nvim/bundle'))
+
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+"NeoBundle 'Shougo/neosnippet.vim'
+"NeoBundle 'Shougo/neosnippet-snippets'
+"NeoBundle 'flazz/vim-colorschemes'
 
 " Github wrapper
-Plugin 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-fugitive'
 
-"Plugin 'L9'
-
-" Command T search plugin
-"Plugin 'wincent/command-t'
-
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+NeoBundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 "
 " Avoid a name conflict with L9
-" Plugin 'user/L9', {'name': 'newL9'}
-Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+" NeoBundle 'user/L9', {'name': 'newL9'}
+NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
 
-Plugin 'groenewege/vim-less'
+NeoBundle 'groenewege/vim-less'
 
 "Jshint for vim
 "Bundle 'wookiehangover/jshint.vim'
 
 "Js syntax
-"Plugin 'jelera/vim-javascript-syntax'
+"NeoBundle 'jelera/vim-javascript-syntax'
 
 "Recommended js syntax to use with jsx lint
-Plugin 'pangloss/vim-javascript'
+NeoBundle 'pangloss/vim-javascript'
 
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'kchmck/vim-coffee-script'
+NeoBundle 'terryma/vim-multiple-cursors'
 
-Plugin 'wavded/vim-stylus'
+NeoBundle 'kchmck/vim-coffee-script'
 
-Plugin 'digitaltoad/vim-jade'
+NeoBundle 'wavded/vim-stylus'
 
-Plugin 'chriskempson/base16-vim'
+NeoBundle 'digitaltoad/vim-jade'
 
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+NeoBundle 'chriskempson/base16-vim'
 
-Plugin 'junegunn/goyo.vim'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'plasticboy/vim-markdown'
 
-Plugin 'junegunn/limelight.vim'
+NeoBundle 'junegunn/goyo.vim'
+
+NeoBundle 'junegunn/limelight.vim'
 
 "Jsx lint
-"Plugin 'mxw/vim-jsx'
+"NeoBundle 'mxw/vim-jsx'
 
 "Nerd commenter
-Plugin 'scrooloose/nerdcommenter'
+NeoBundle 'scrooloose/nerdcommenter'
 
 "Rails vim
-Plugin 'tpope/vim-rails'
+NeoBundle 'tpope/vim-rails'
 
 "Vim snippets and snip-mate
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
+NeoBundle 'MarcWeber/vim-addon-mw-utils'
+NeoBundle 'tomtom/tlib_vim'
+NeoBundle 'garbas/vim-snipmate'
+NeoBundle 'honza/vim-snippets'
 
 "ES6 snippets
-Plugin 'isRuslan/vim-es6'
+NeoBundle 'isRuslan/vim-es6'
 
 "Mustache/Handlebars mode from vim
-Plugin 'mustache/vim-mustache-handlebars'
+NeoBundle 'mustache/vim-mustache-handlebars'
 
 "Integrate ag with vim
-Plugin 'rking/ag.vim'
+NeoBundle 'rking/ag.vim'
 
 "Slim template highlight
-Plugin 'slim-template/vim-slim'
+NeoBundle 'slim-template/vim-slim'
 
 "Dash doc vim
-Plugin 'rizzatti/dash.vim'
+NeoBundle 'rizzatti/dash.vim'
 
 "Rubocop
-Plugin 'ngmy/vim-rubocop'
+NeoBundle 'ngmy/vim-rubocop'
 
 "Folding for RSpec
-Plugin 'vim-utils/vim-ruby-fold'
+NeoBundle 'vim-utils/vim-ruby-fold'
 
 "Stack answers
-Plugin 'james9909/stackanswers.vim'
+NeoBundle 'james9909/stackanswers.vim'
 
 "Airline
-Plugin 'bling/vim-airline'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 
 "Vim devicons
-Plugin 'ryanoasis/vim-devicons'
+NeoBundle 'ryanoasis/vim-devicons'
 
 "Enhance netrw
-Plugin 'tpope/vim-vinegar'
+NeoBundle 'tpope/vim-vinegar'
 
 "Elm!!
-Plugin 'lambdatoast/elm.vim'
+NeoBundle 'lambdatoast/elm.vim'
 
 "Vim solarized
-"Plugin 'altercation/vim-colors-solarized'
+"NeoBundle 'altercation/vim-colors-solarized'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
+call neobundle#end()
+
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal see :h vundle for more details or wiki for FAQ Put your non-Plugin stuff after this line syntax enable syntax on
+
+NeoBundleCheck
+
 set nu
 set t_Co=256
 "Search
