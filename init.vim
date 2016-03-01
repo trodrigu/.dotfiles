@@ -3,10 +3,11 @@ filetype off                  " required
 
 if has('vim_starting')
   " Required:
-  set runtimepath+=/Users/thomas/.config/nvim/bundle/neobundle.vim/
+  set runtimepath+=/Users/$USER/.config/nvim/bundle/neobundle.vim/
 endif
 
-call neobundle#begin(expand('/Users/thomas/.config/nvim/bundle'))
+"let fullpath='/Users/' . $USER . '/.config/nvim/bundle/neobundle.vim/'
+call neobundle#begin(expand('/Users/' . $USER . '/.config/nvim/bundle/neobundle.vim/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
