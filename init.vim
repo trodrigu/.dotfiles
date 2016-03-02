@@ -52,9 +52,6 @@ NeoBundle 'junegunn/goyo.vim'
 
 NeoBundle 'junegunn/limelight.vim'
 
-"Jsx lint
-"NeoBundle 'mxw/vim-jsx'
-
 "Nerd commenter
 NeoBundle 'scrooloose/nerdcommenter'
 
@@ -106,6 +103,8 @@ NeoBundle 'lambdatoast/elm.vim'
 
 "Vim solarized
 "NeoBundle 'altercation/vim-colors-solarized'
+
+"NeoBundle 'craigmery/vim-autotag'
 
 call neobundle#end()
 
