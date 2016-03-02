@@ -1,6 +1,6 @@
 --recurse=yes
 --exclude=.git
---exclude=vender/*
+--exclude=vendor/*
 --exclude=node_modules/*
 --exclude=node_modules/*
 --exclude=db/*
