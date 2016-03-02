@@ -5,3 +5,5 @@
 --exclude=node_modules/*
 --exclude=db/*
 --exclude=log/*
+--exclude=bower_modules/*
+--exclude=admin_themes/*
