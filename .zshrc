@@ -97,6 +97,9 @@ eval `/usr/libexec/path_helper -s`
 # Sublime alias
 alias sub="subl"
 
+# alias bundle exec
+alias be="bundle exec"
+
 # Gems path
 if which ruby >/dev/null && which gem >/dev/null; then
   PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
@@ -119,6 +122,10 @@ alias nv='nvim'
 
 # Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='
+  (git ls-tree -r --name-only HEAD ||
+   find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
+   sed s/^..//) 2> /dev/null'
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
@@ -135,3 +142,8 @@ export DOCKER_MACHINE_NAME="dev"
 
 # Merge conflicts
 alias fix='git diff --name-only | uniq | xargs $EDITOR'
+
+[ -s "/Users/trodrigu/.dnx/dnvm/dnvm.sh" ] && . "/Users/trodrigu/.dnx/dnvm/dnvm.sh" # Load dnvm
+
+# added by travis gem
+[ -f /Users/trodrigu/.travis/travis.sh ] && source /Users/trodrigu/.travis/travis.sh

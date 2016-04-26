@@ -1,0 +1,9 @@
+set editing-mode vi
+"\C-u": kill-whole-line
+"\C-w": backward-kill-word
+set keymap vi-insert
+"jj": vi-movement-mode
+"jf": vi-movement-mode
+set show-all-if-ambiguous on
+set completion-ignore-case on
+set bind-tty-special-chars off

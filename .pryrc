@@ -30,7 +30,6 @@ Pry.config.ls.private_method_color = :bright_black
 begin
   require 'awesome_print'
   AwesomePrint.pry!
-  Pry.config.print = proc { |output, value| output.puts "=> #{ap.value}" }
 rescue
   puts "=> Unable to load awesome_print, please type 'gem install awesome_print' or 'sudo gem install awesome_print'."
 end

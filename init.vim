@@ -1,3 +1,5 @@
+let g:python3_host_prog='/usr/local/bin/python3'
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -106,6 +108,17 @@ NeoBundle 'lambdatoast/elm.vim'
 
 "NeoBundle 'craigmery/vim-autotag'
 
+NeoBundle 'shougo/unite.vim'
+
+NeoBundle 'tsukkee/unite-tag'
+
+NeoBundle 'Shougo/deoplete.nvim'
+
+NeoBundle 'OmniSharp/omnisharp-vim'
+let g:OmniSharp_selector_ui = 'unite'
+
+NeoBundle 'tpope/vim-dispatch'
+
 call neobundle#end()
 
 filetype plugin indent on    " required
@@ -191,7 +204,7 @@ set wildignore+=node_modules
 set wildignore+=bower_components
 
 "Integrate ag
-"let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ag_prg= 'ag --nogroup --nocolor --column'
 
 if executable('ag')
   " Note we extract the column as well as the file and line number
@@ -264,6 +277,9 @@ endf
 
 "Shortcut for pry
 map <Leader>bi orequire'pry';binding.pry<esc>:w<cr>
+
+"Add bundle exec to vim rubocop
+let g:vimrubocop_rubocop_cmd = "bundle exec rubocop"
 
 "fun! VexOpen(dir)
   "let g:netrw_browse_split=4
@@ -374,7 +390,7 @@ map <leader>n :call RenameFile()<cr>
 
 function! PromoteToLet()
   :normal! dd
-  " :exec '?^\s*it\>'
+   ":exec '?^\s*it\>'
   :normal! P
   :.s/\(\w+\) = \(.*\)$let(:\1) { \2 }/
   :normal ==
@@ -384,3 +400,18 @@ endfunction
 
 " Dash mapping
 :nmap <silent> <leader>d <Plug>DashSearch
+
+"figure out how to make this toggle
+"add focus tag
+function! AddFocusTag()
+  let it_example = getline('.')
+  if match(it_example, "', focus: true do") != -1
+    let unfocused_it_example = substitute(it_example, "', focus: true do", "' do", "")
+    call setline('.', unfocused_it_example)
+  else
+    let focused_it_example = substitute(it_example, "' do", "', focus: true do", "")
+    call setline('.', focused_it_example)
+  endif
+endfunction
+:command! AddFocusTag :call AddFocusTag()
+:map <leader>v :AddFocusTag<cr>
