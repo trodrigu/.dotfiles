@@ -405,12 +405,15 @@ endfunction
 function! AddFocusTag()
   let it_example = getline('.')
   if match(it_example, "', focus: true do") != -1
-    let unfocused_it_example = substitute(it_example, "', focus: true do", "' do", "")
-    call setline('.', unfocused_it_example)
-  else
-    let focused_it_example = substitute(it_example, "' do", "', focus: true do", "")
-    call setline('.', focused_it_example)
+    let changed_it_example = substitute(it_example, "', focus: true do", "' do", "")
+  elseif match(it_example, "\", focus: true do") != -1
+    let changed_it_example = substitute(it_example, "\", focus: true do", "\" do", "")
+  elseif match(it_example, "\" do") != -1
+    let changed_it_example = substitute(it_example, "\" do", "\", focus: true do", "")
+  elseif match(it_example, "' do", "', focus: true do", "") != -1
+    let changed_it_example = substitute(it_example, "' do", "', focus: true do", "")
   endif
+  call setline('.', changed_it_example)
 endfunction
 :command! AddFocusTag :call AddFocusTag()
 :map <leader>v :AddFocusTag<cr>
