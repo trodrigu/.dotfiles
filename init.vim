@@ -401,7 +401,6 @@ endfunction
 " Dash mapping
 :nmap <silent> <leader>d <Plug>DashSearch
 
-"figure out how to make this toggle
 "add focus tag
 function! AddFocusTag()
   let it_example = getline('.')
