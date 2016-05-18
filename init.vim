@@ -119,6 +119,8 @@ let g:OmniSharp_selector_ui = 'unite'
 
 NeoBundle 'tpope/vim-dispatch'
 
+NeoBundle 'fatih/vim-go'
+
 call neobundle#end()
 
 filetype plugin indent on    " required
@@ -417,3 +419,7 @@ function! AddFocusTag()
 endfunction
 :command! AddFocusTag :call AddFocusTag()
 :map <leader>v :AddFocusTag<cr>
+
+"Expand the active file directory
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+
