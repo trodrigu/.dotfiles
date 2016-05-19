@@ -62,6 +62,7 @@ export EDITOR=nvim
 source $ZSH/oh-my-zsh.sh
 export PATH="/usr/local/apache-maven-3.3.3/bin:$PATH"
 export PATH="/Library/Python/2.7/bin"
+export GOPATH=$HOME/golang
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
