@@ -423,3 +423,15 @@ endfunction
 "Expand the active file directory
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
+" deoplete omnifuncs
+augroup omifuncs
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd Filetype html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType rb setlocal omnifunc=rubycomplete#Complete
+augroup end
+
+" deoplete map up/down to C-j/C-k
+inoremap <silent><expr> <C-j> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+inoremap <silent><expr> <C-k> pumvisible() ? "\<C-p>" : deoplete#mappings#manual_complete()
