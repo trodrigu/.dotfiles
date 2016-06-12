@@ -56,13 +56,15 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
 #export PATH="/usr/local/share/npm/bin:$PATH"
 export PATH="/usr/local/lib/node_modules:$PATH"
+export PATH=$PATH:/usr/local/go/bin
 export NVM_DIR=$(brew --prefix)/var/nvm
 source $(brew --prefix nvm)/nvm.sh
 export EDITOR=nvim
 source $ZSH/oh-my-zsh.sh
 export PATH="/usr/local/apache-maven-3.3.3/bin:$PATH"
 export PATH="/Library/Python/2.7/bin"
-export GOPATH=$HOME/golang
+export GOPATH=$HOME/Code/golang
+export PATH=/Library/Frameworks/Python.framework/Versions/3.3/bin:$PATH
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -142,9 +144,13 @@ export DOCKER_MACHINE_NAME="dev"
 # eval "$(docker-machine env dev)"
 
 # Merge conflicts
-alias fix='git diff --name-only | uniq | xargs $EDITOR'
+#alias fix='git diff --name-only | uniq | xargs $EDITOR'
+alias fix='git mergetool --tool=gvimdiff'
 
 [ -s "/Users/trodrigu/.dnx/dnvm/dnvm.sh" ] && . "/Users/trodrigu/.dnx/dnvm/dnvm.sh" # Load dnvm
 
 # added by travis gem
 [ -f /Users/trodrigu/.travis/travis.sh ] && source /Users/trodrigu/.travis/travis.sh
+
+alias python=/usr/local/bin/python3
+alias ducks='du -cks * | sort -rn | head'
