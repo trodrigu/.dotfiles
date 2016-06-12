@@ -1,3 +1,4 @@
+let g:deoplete#enable_at_startup = 1
 let g:python3_host_prog='/usr/local/bin/python3'
 
 set nocompatible              " be iMproved, required
@@ -5,127 +6,140 @@ filetype off                  " required
 
 if has('vim_starting')
   " Required:
-  set runtimepath+=/Users/$USER/.config/nvim/bundle/neobundle.vim/
+  "set runtimepath+=/Users/$USER/.config/nvim/bundle/neobundle.vim/
 endif
 
-"let fullpath='/Users/' . $USER . '/.config/nvim/bundle/neobundle.vim/'
-call neobundle#begin(expand('/Users/' . $USER . '/.config/nvim/bundle/neobundle.vim/'))
+set runtimepath+=/Users/$USER/.config/nvim/repos/github.com/Shougo/dein.vim
+"set runtimepath+=/Users/$USER/.cache/dein/repos/github.com/Shougo/deoplete.nvim
 
-NeoBundleFetch 'Shougo/neobundle.vim'
+" Required:
+call dein#begin(expand('~/.cache/dein'))
 
-"NeoBundle 'Shougo/neosnippet.vim'
-"NeoBundle 'Shougo/neosnippet-snippets'
-"NeoBundle 'flazz/vim-colorschemes'
+" Required:
+call dein#add('Shougo/dein.vim')
+
+" You can specify revision/branch/tag.
+call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
 
 " Github wrapper
-NeoBundle 'tpope/vim-fugitive'
+call dein#add('tpope/vim-fugitive')
 
-NeoBundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+call dein#add('rstacruz/sparkup', {'rtp': 'vim/'})
 "
 " Avoid a name conflict with L9
-" NeoBundle 'user/L9', {'name': 'newL9'}
-NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
+call dein#add('jeffkreeftmeijer/vim-numbertoggle')
 
-NeoBundle 'groenewege/vim-less'
+call dein#add('groenewege/vim-less')
 
 "Jshint for vim
 "Bundle 'wookiehangover/jshint.vim'
 
 "Js syntax
-"NeoBundle 'jelera/vim-javascript-syntax'
+call dein#add('jelera/vim-javascript-syntax')
 
 "Recommended js syntax to use with jsx lint
-NeoBundle 'pangloss/vim-javascript'
+call dein#add('pangloss/vim-javascript')
 
-NeoBundle 'terryma/vim-multiple-cursors'
+call dein#add('terryma/vim-multiple-cursors')
 
-NeoBundle 'kchmck/vim-coffee-script'
+call dein#add('kchmck/vim-coffee-script')
 
-NeoBundle 'wavded/vim-stylus'
+call dein#add('wavded/vim-stylus')
 
-NeoBundle 'digitaltoad/vim-jade'
+call dein#add('digitaltoad/vim-jade')
 
-NeoBundle 'chriskempson/base16-vim'
+call dein#add('godlygeek/tabular')
+call dein#add('plasticboy/vim-markdown')
 
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'plasticboy/vim-markdown'
+call dein#add('junegunn/goyo.vim')
 
-NeoBundle 'junegunn/goyo.vim'
-
-NeoBundle 'junegunn/limelight.vim'
+call dein#add('junegunn/limelight.vim')
 
 "Nerd commenter
-NeoBundle 'scrooloose/nerdcommenter'
+call dein#add('scrooloose/nerdcommenter')
 
 "Rails vim
-NeoBundle 'tpope/vim-rails'
+"call dein#add('tpope/vim-rails')
 
 "Vim snippets and snip-mate
-NeoBundle 'MarcWeber/vim-addon-mw-utils'
-NeoBundle 'tomtom/tlib_vim'
-NeoBundle 'garbas/vim-snipmate'
-NeoBundle 'honza/vim-snippets'
+call dein#add('MarcWeber/vim-addon-mw-utils')
+call dein#add('tomtom/tlib_vim')
+call dein#add('garbas/vim-snipmate')
+call dein#add('honza/vim-snippets')
 
 "ES6 snippets
-NeoBundle 'isRuslan/vim-es6'
+call dein#add('isRuslan/vim-es6')
 
 "Mustache/Handlebars mode from vim
-NeoBundle 'mustache/vim-mustache-handlebars'
+call dein#add('mustache/vim-mustache-handlebars')
 
 "Integrate ag with vim
-NeoBundle 'rking/ag.vim'
+call dein#add('rking/ag.vim')
 
 "Slim template highlight
-NeoBundle 'slim-template/vim-slim'
+call dein#add('slim-template/vim-slim')
 
 "Dash doc vim
-NeoBundle 'rizzatti/dash.vim'
+call dein#add('rizzatti/dash.vim')
 
 "Rubocop
-NeoBundle 'ngmy/vim-rubocop'
+call dein#add('ngmy/vim-rubocop')
 
 "Folding for RSpec
-NeoBundle 'vim-utils/vim-ruby-fold'
+call dein#add('vim-utils/vim-ruby-fold')
 
 "Stack answers
-NeoBundle 'james9909/stackanswers.vim'
+"call dein#add('james9909/stackanswers.vim')
 
 "Airline
-NeoBundle 'bling/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
+call dein#add('bling/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
 
 "Vim devicons
-NeoBundle 'ryanoasis/vim-devicons'
+call dein#add('ryanoasis/vim-devicons')
 
 "Enhance netrw
-NeoBundle 'tpope/vim-vinegar'
+call dein#add('tpope/vim-vinegar')
 
 "Elm!!
-NeoBundle 'lambdatoast/elm.vim'
+"call dein#add('lambdatoast/elm.vim')
 
 "Vim solarized
-"NeoBundle 'altercation/vim-colors-solarized'
+"call dein#add('altercation/vim-colors-solarized')
 
-"NeoBundle 'craigmery/vim-autotag'
+"Base-16
+call dein#add('chriskempson/base16-vim')
 
-NeoBundle 'shougo/unite.vim'
+call dein#add('shougo/unite.vim')
 
-NeoBundle 'tsukkee/unite-tag'
+call dein#add('tsukkee/unite-tag')
 
-NeoBundle 'Shougo/deoplete.nvim'
+"call dein#add('Shougo/deoplete.nvim')
 
-NeoBundle 'OmniSharp/omnisharp-vim'
-let g:OmniSharp_selector_ui = 'unite'
+"call dein#add('OmniSharp/omnisharp-vim')
+"let g:OmniSharp_selector_ui = 'unite'
 
-NeoBundle 'tpope/vim-dispatch'
+call dein#add('tpope/vim-dispatch')
 
-NeoBundle 'fatih/vim-go'
+call dein#add('fatih/vim-go')
 
-call neobundle#end()
+"call dein#add('osyo-manga/vim-monster')
 
-filetype plugin indent on    " required
+call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 
-NeoBundleCheck
+"call dein#add('Konfekt/FastFold')
+
+" Required:
+call dein#end()
+
+" Required:
+filetype plugin indent on
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
 
 set nu
 set t_Co=256
@@ -158,16 +172,13 @@ set history=1000
 set mouse=a 
 
 "Background
-"Set both of the following for dark base 16
+syntax enable
 set background=dark
 colorscheme base16-default
-"colorscheme solarized
-syntax enable
 
 "Comment the above and set the below for light
 "set background=light
 "highlight LineNr ctermfg=gray ctermbg=NONE
-
 "Toggle vim-numbertoggle
 let g:NumberToggleTrigger="<F2>"
 
@@ -246,6 +257,7 @@ command! -nargs=1 Locate call fzf#run(
 
 "remap leader
 let mapleader = ","
+noremap \ ,
 
 nnoremap <silent> <Leader>v :call fzf#run({
       \ 'right': winwidth('.') / 2,
@@ -429,9 +441,14 @@ augroup omifuncs
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd Filetype html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType rb setlocal omnifunc=rubycomplete#Complete
 augroup end
 
 " deoplete map up/down to C-j/C-k
 inoremap <silent><expr> <C-j> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 inoremap <silent><expr> <C-k> pumvisible() ? "\<C-p>" : deoplete#mappings#manual_complete()
+
+" With deoplete.nvim
+"let g:monster#completion#rcodetools#backend = "async_rct_complete"
+let g:deoplete#sources#omni#input_patterns = {
+\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+\}
