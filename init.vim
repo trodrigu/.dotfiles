@@ -1,16 +1,10 @@
-let g:deoplete#enable_at_startup = 1
-let g:python3_host_prog='/usr/local/bin/python3'
+"let g:deoplete#enable_at_startup = 1
+"let g:python3_host_prog='/usr/local/bin/python3'
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-if has('vim_starting')
-  " Required:
-  "set runtimepath+=/Users/$USER/.config/nvim/bundle/neobundle.vim/
-endif
-
 set runtimepath+=/Users/$USER/.config/nvim/repos/github.com/Shougo/dein.vim
-"set runtimepath+=/Users/$USER/.cache/dein/repos/github.com/Shougo/deoplete.nvim
 
 " Required:
 call dein#begin(expand('~/.cache/dein'))
@@ -18,48 +12,56 @@ call dein#begin(expand('~/.cache/dein'))
 " Required:
 call dein#add('Shougo/dein.vim')
 
-" You can specify revision/branch/tag.
+"Vim shell
 call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
 
-" Github wrapper
+"Github wrapper
 call dein#add('tpope/vim-fugitive')
 
+"Tab completion for html/css
 call dein#add('rstacruz/sparkup', {'rtp': 'vim/'})
 "
-" Avoid a name conflict with L9
+"Avoid a name conflict with L9
 call dein#add('jeffkreeftmeijer/vim-numbertoggle')
 
+"Highlighting for less
 call dein#add('groenewege/vim-less')
 
 "Jshint for vim
-"Bundle 'wookiehangover/jshint.vim'
-
-"Js syntax
-call dein#add('jelera/vim-javascript-syntax')
+call dein#add('wookiehangover/jshint.vim')
 
 "Recommended js syntax to use with jsx lint
 call dein#add('pangloss/vim-javascript')
 
-call dein#add('terryma/vim-multiple-cursors')
+"Multiple cursors
+"call dein#add('terryma/vim-multiple-cursors')
 
+"Highlighting for coffee script
 call dein#add('kchmck/vim-coffee-script')
 
+"Hightlighting for stylus
 call dein#add('wavded/vim-stylus')
 
+"Highlighting for jade
 call dein#add('digitaltoad/vim-jade')
 
+"Align with `:Tab/{alignment object}`
 call dein#add('godlygeek/tabular')
+
+"Markdown highlighting
 call dein#add('plasticboy/vim-markdown')
 
+"Non invasive writing view
 call dein#add('junegunn/goyo.vim')
 
+"Integrates with goyo for focusing on a paragraph
 call dein#add('junegunn/limelight.vim')
 
-"Nerd commenter
+"Easy commenting with nerd commenter
 call dein#add('scrooloose/nerdcommenter')
 
-"Rails vim
-"call dein#add('tpope/vim-rails')
+"Rails vim tools
+call dein#add('tpope/vim-rails')
 
 "Vim snippets and snip-mate
 call dein#add('MarcWeber/vim-addon-mw-utils')
@@ -88,9 +90,6 @@ call dein#add('ngmy/vim-rubocop')
 "Folding for RSpec
 call dein#add('vim-utils/vim-ruby-fold')
 
-"Stack answers
-"call dein#add('james9909/stackanswers.vim')
-
 "Airline
 call dein#add('bling/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
@@ -101,33 +100,36 @@ call dein#add('ryanoasis/vim-devicons')
 "Enhance netrw
 call dein#add('tpope/vim-vinegar')
 
-"Elm!!
-"call dein#add('lambdatoast/elm.vim')
-
-"Vim solarized
-"call dein#add('altercation/vim-colors-solarized')
-
-"Base-16
-call dein#add('chriskempson/base16-vim')
+"Elm Highlighting
+call dein#add('lambdatoast/elm.vim')
 
 call dein#add('shougo/unite.vim')
 
-call dein#add('tsukkee/unite-tag')
+""call dein#add('tsukkee/unite-tag')
 
-"call dein#add('Shougo/deoplete.nvim')
+"""call dein#add('Shougo/deoplete.nvim')
 
-"call dein#add('OmniSharp/omnisharp-vim')
+"""call dein#add('OmniSharp/omnisharp-vim')
 "let g:OmniSharp_selector_ui = 'unite'
 
 call dein#add('tpope/vim-dispatch')
 
 call dein#add('fatih/vim-go')
 
-"call dein#add('osyo-manga/vim-monster')
+"""call dein#add('osyo-manga/vim-monster')
 
 call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 
-"call dein#add('Konfekt/FastFold')
+"""call dein#add('Konfekt/FastFold')
+
+"Vim solarized
+call dein#add('altercation/vim-colors-solarized')
+
+"Text Objects
+call dein#add('kana/vim-textobj-user')
+
+"Text Object between if/else
+call dein#add('thinca/vim-textobj-between')
 
 " Required:
 call dein#end()
@@ -172,18 +174,9 @@ set history=1000
 set mouse=a 
 
 "Background
-syntax enable
-set background=dark
-colorscheme base16-default
-
-"Comment the above and set the below for light
-"set background=light
-"highlight LineNr ctermfg=gray ctermbg=NONE
-"Toggle vim-numbertoggle
-let g:NumberToggleTrigger="<F2>"
-
-"Remap Command T
-nmap <leader>t :CommandT<CR>
+colorscheme solarized
+set background=light
+highlight LineNr ctermfg=gray ctermbg=NONE
 
 set clipboard=unnamed
 
@@ -202,19 +195,19 @@ autocmd User GoyoEnter Limelight
 autocmd User GoyoLeave Limelight!
 
 "Mustache abbr
-let g:mustache_abbreviations = 1
+"let g:mustache_abbreviations = 1
 
 "Gvimdiff shortcut
-map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
-map <silent> <leader>3 :diffget 3><CR> :diffupdate<CR>
-map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
+"map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
+"map <silent> <leader>3 :diffget 3><CR> :diffupdate<CR>
+"map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
 
 "ESC shortcut
 imap jj <Esc>
 
 "Ignore node_modules and bower_components with command t
-set wildignore+=node_modules
-set wildignore+=bower_components
+"set wildignore+=node_modules
+"set wildignore+=bower_components
 
 "Integrate ag
 let g:ag_prg= 'ag --nogroup --nocolor --column'
@@ -225,13 +218,10 @@ if executable('ag')
   set grepformat=%f:%l:%c%m
 endif
 
-nmap <silent> <RIGHT> :cnext<CR>
-nmap <silent> <LEFT> :cprev<CR>
+"nmap <silent> <RIGHT> :cnext<CR>
+"nmap <silent> <LEFT> :cprev<CR>
 "Fuzzy finder
 set rtp+=/usr/local/opt/fzf
-
-"Nvim environment var
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 "Rmap the temrianal emulator in neovim
 :tnoremap <Leader>e <C-\><C-n>
@@ -239,7 +229,7 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set nohlsearch
 
 "custom ag name
-"let g:ag_working_path_mode="r"
+let g:ag_working_path_mode="r"
 "
 "Remap move panes
 map <C-J> <C-W>j<C-W>_
@@ -281,13 +271,13 @@ set foldnestmax=10
 set nofoldenable
 set foldlevel=1
 
-fun! VexToggle(dir)
-  if exists("t:vex_buf_nr")
-    call VexClose()
-  else
-    call VexOpen(a:dir)
-  endif
-endf
+"fun! VexToggle(dir)
+"  if exists("t:vex_buf_nr")
+"    call VexClose()
+"  else
+"    call VexOpen(a:dir)
+"  endif
+"endf
 
 "Shortcut for pry
 map <Leader>bi orequire'pry';binding.pry<esc>:w<cr>
@@ -341,55 +331,55 @@ let g:vimrubocop_rubocop_cmd = "bundle exec rubocop"
 "noremap <Leader>` :call VexToggle("")<CR>
 
 ""Make netrw better
-"let g:netrw_liststyle=0
-"let g:netrw_banner=0
-"let g:netrw_altv=1
-"let g:netrw_preview=1
+let g:netrw_liststyle=0
+let g:netrw_banner=0
+let g:netrw_altv=1
+let g:netrw_preview=1
 
 "Test helpers
-function! RunTests(filename)
+"function! RunTests(filename)
   " Write the file and run tests for the given filename
-  :w
-  :silent !echo;echo;echo;echo;echo
-  exec ":!bundle exec rspec " . a:filename
-endfunction
+"  :w
+"  :silent !echo;echo;echo;echo;echo
+"  exec ":!bundle exec rspec " . a:filename
+"endfunction
 
-function! SetTestFile()
+"function! SetTestFile()
   " Set the spec file that tests will be run for
-  let t:grb_test_file=@%
-endfunction
+"  let t:grb_test_file=@%
+"endfunction
 
-function! RunTestFile(...)
-  if a:0
-    let command_suffix = a:1
-  else
-    let command_suffix = ""
-  endif
+"function! RunTestFile(...)
+"  if a:0
+"    let command_suffix = a:1
+"  else
+"    let command_suffix = ""
+"  endif
 
   " Run the tests for the previously-marked file.
-  let in_spec_file = match(expand("%"), '_spec.rb') != -1
-  if in_spec_file
-    call SetTestFile()
-  elseif !exists("t:grb_test_file")
-    return
-  end
-  call RunTests(t:grb_test_file . command_suffix)
-endfunction
+"  let in_spec_file = match(expand("%"), '_spec.rb') != -1
+"  if in_spec_file
+"    call SetTestFile()
+"  elseif !exists("t:grb_test_file")
+"    return
+"  end
+"  call RunTests(t:grb_test_file . command_suffix)
+"endfunction
 
-function! RunNearestTest()
-  let spec_line_number = line('.')
-  call RunTestFile(":" . spec_line_number)
-endfunction
+"function! RunNearestTest()
+"  let spec_line_number = line('.')
+"  call RunTestFile(":" . spec_line_number)
+"endfunction
 
 " Run this file
-map <leader>r :call RunTestFile()<cr>
+"map <leader>r :call RunTestFile()<cr>
 " Run only the example under the cursor
-map <leader>. :call RunNearestTest()<cr>
+"map <leader>. :call RunNearestTest()<cr>
 " Run all test files
-map <leader>a :call RunTests('spec')<cr>
+"map <leader>a :call RunTests('spec')<cr>
 
 " Clear the search buffer when hitting return
-:nnoremap <CR> :nohlsearch<cr>
+":nnoremap <CR> :nohlsearch<cr>
 
 function! RenameFile()
   let old_name = expand('%')
@@ -402,15 +392,15 @@ function! RenameFile()
 endfunction
 map <leader>n :call RenameFile()<cr>
 
-function! PromoteToLet()
-  :normal! dd
-   ":exec '?^\s*it\>'
-  :normal! P
-  :.s/\(\w+\) = \(.*\)$let(:\1) { \2 }/
-  :normal ==
-endfunction
-:command! PromoteToLet :call PromoteToLet()
-:map <leader>p :PromoteToLet<cr>
+"function! PromoteToLet()
+"  :normal! dd
+"   ":exec '?^\s*it\>'
+"  :normal! P
+"  :.s/\(\w+\) = \(.*\)$let(:\1) { \2 }/
+"  :normal ==
+"endfunction
+":command! PromoteToLet :call PromoteToLet()
+":map <leader>p :PromoteToLet<cr>
 
 " Dash mapping
 :nmap <silent> <leader>d <Plug>DashSearch
@@ -436,19 +426,22 @@ endfunction
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 " deoplete omnifuncs
-augroup omifuncs
-  autocmd!
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd Filetype html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-augroup end
+"augroup omifuncs
+"  autocmd!
+"  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+"  autocmd Filetype html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"augroup end
 
 " deoplete map up/down to C-j/C-k
-inoremap <silent><expr> <C-j> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
-inoremap <silent><expr> <C-k> pumvisible() ? "\<C-p>" : deoplete#mappings#manual_complete()
+"inoremap <silent><expr> <C-j> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+"inoremap <silent><expr> <C-k> pumvisible() ? "\<C-p>" : deoplete#mappings#manual_complete()
 
 " With deoplete.nvim
 "let g:monster#completion#rcodetools#backend = "async_rct_complete"
-let g:deoplete#sources#omni#input_patterns = {
-\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-\}
+"let g:deoplete#sources#omni#input_patterns = {
+"\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+"\}
+
+"Unite with Ag
+"nnoremap <space>/ :Unite ag --nogroup --nocolor --column
