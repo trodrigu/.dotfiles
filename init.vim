@@ -131,6 +131,9 @@ call dein#add('kana/vim-textobj-user')
 "Text Object between if/else
 call dein#add('thinca/vim-textobj-between')
 
+"Subvert for super charged substitutions
+call dein#add('tpope/vim-abolish')
+
 " Required:
 call dein#end()
 
@@ -445,3 +448,20 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 "Unite with Ag
 "nnoremap <space>/ :Unite ag --nogroup --nocolor --column
+
+" Toggle highlighting
+nnoremap <F4> :set hlsearch! hlsearch?<CR>
+
+" Populate quick fix
+command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
+function! QuickfixFilenames()
+  let buffer_numbers = {}
+  for quickfix_item in getqflist()
+    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+  endfor
+  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+endfunction
+
+" Set vimgrep to ag
+set grepprg=ag\ --vimgrep\ $*
+set grepformat=%f:%l:%c:%m
