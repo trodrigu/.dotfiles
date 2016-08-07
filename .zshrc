@@ -45,7 +45,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git history frontend-search)
+plugins=(git history frontend-search rails ruby)
 
 # User configuration
 
@@ -93,6 +93,7 @@ alias f="open -a finder"
 alias m="mvim"
 alias tx="open -a /Applications/TeX/TeXShop.App"
 alias gprune="git branch -r | awk '{print \$1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print \$1}' | xargs git branch -d"
+alias ta="ctags --exclude=*.html --exclude=*.js --exclude=*.css --exclude=*.scss -R"
 
 # Mactex path
 eval `/usr/libexec/path_helper -s`
