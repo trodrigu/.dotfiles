@@ -1,4 +1,4 @@
-"let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 "let g:python3_host_prog='/usr/local/bin/python3'
 
 set nocompatible              " be iMproved, required
@@ -107,7 +107,7 @@ call dein#add('shougo/unite.vim')
 
 ""call dein#add('tsukkee/unite-tag')
 
-"""call dein#add('Shougo/deoplete.nvim')
+call dein#add('Shougo/deoplete.nvim')
 
 """call dein#add('OmniSharp/omnisharp-vim')
 "let g:OmniSharp_selector_ui = 'unite'
@@ -116,7 +116,7 @@ call dein#add('tpope/vim-dispatch')
 
 call dein#add('fatih/vim-go')
 
-"""call dein#add('osyo-manga/vim-monster')
+call dein#add('osyo-manga/vim-monster')
 
 call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 
@@ -178,7 +178,7 @@ set mouse=a
 
 "Background
 colorscheme solarized
-set background=light
+set background=dark
 highlight LineNr ctermfg=gray ctermbg=NONE
 
 set clipboard=unnamed
@@ -259,6 +259,34 @@ nnoremap <silent> <Leader>v :call fzf#run({
 nnoremap <silent> <Leader>f :call fzf#run({
       \ 'sink': 'edit' })<CR>
 
+function! s:tags_sink(line)
+  let parts = split(a:line, '\t\zs')
+  let excmd = matchstr(parts[:2], '^.*\ze;"\t')
+  execute 'silent e' parts[1][:-2]
+  let [magic, &magic] = [&magic, 0]
+  execute excmd
+  let &magic = magic
+endfunction
+
+function! s:tags()
+  if empty(tagfiles())
+    echohl WarningMsg
+    echom 'Preparing Tags Tommy!'
+    echohl None
+    call system('ctags -R')
+  endif
+
+  call fzf#run({
+  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+  \            ' | grep -v ^!',
+  \ 'options':  '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+  \ 'down':     '40%', 
+  \ 'sink':     function('s:tags_sink')})
+endfunction
+
+command! Tags call s:tags()
+nnoremap <Leader>t :Tags<cr>
+
 "if ! has('gui_running')
   "set ttimeoutlen=10
   "augroup FastEscape
@@ -285,9 +313,26 @@ set foldlevel=1
 "Shortcut for pry
 map <Leader>bi orequire'pry';binding.pry<esc>:w<cr>
 
+function! GetDebugTerm()
+  let g:term = expand('<cword>')
+endf
+
+function! SetDebugTerm()
+  let @s = 'puts "*" * 90;puts "#{' . g:term . '.inspect}";puts "*" * 90'
+endf
+
+function! PasteDebug()
+  call GetDebugTerm()
+  call SetDebugTerm()
+  normal o
+  normal "sp
+endf
+nnoremap <Leader>bb :call PasteDebug()<esc>:w<cr>
+
+nnoremap <leader>wtf oputs "#" * 90<c-m>puts caller<c-m>puts "#" * 90<esc>
+
 "Add bundle exec to vim rubocop
 let g:vimrubocop_rubocop_cmd = "bundle exec rubocop"
-
 "fun! VexOpen(dir)
   "let g:netrw_browse_split=4
   "let vex_width=25
@@ -437,14 +482,14 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 "augroup end
 
 " deoplete map up/down to C-j/C-k
-"inoremap <silent><expr> <C-j> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
-"inoremap <silent><expr> <C-k> pumvisible() ? "\<C-p>" : deoplete#mappings#manual_complete()
+inoremap <silent><expr> <C-j> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+inoremap <silent><expr> <C-k> pumvisible() ? "\<C-p>" : deoplete#mappings#manual_complete()
 
 " With deoplete.nvim
-"let g:monster#completion#rcodetools#backend = "async_rct_complete"
-"let g:deoplete#sources#omni#input_patterns = {
-"\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-"\}
+let g:monster#completion#rcodetools#backend = "async_rct_complete"
+let g:deoplete#sources#omni#input_patterns = {
+\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+\}
 
 "Unite with Ag
 "nnoremap <space>/ :Unite ag --nogroup --nocolor --column
