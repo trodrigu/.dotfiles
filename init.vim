@@ -1,6 +1,5 @@
 let g:deoplete#enable_at_startup = 1
-"let g:python3_host_prog='/usr/local/bin/python3'
-
+let g:python3_host_prog='/usr/local/bin/python3'
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -20,7 +19,7 @@ call dein#add('tpope/vim-fugitive')
 
 "Tab completion for html/css
 call dein#add('rstacruz/sparkup', {'rtp': 'vim/'})
-"
+
 "Avoid a name conflict with L9
 call dein#add('jeffkreeftmeijer/vim-numbertoggle')
 
@@ -31,7 +30,7 @@ call dein#add('groenewege/vim-less')
 call dein#add('wookiehangover/jshint.vim')
 
 "Recommended js syntax to use with jsx lint
-call dein#add('pangloss/vim-javascript')
+"call dein#add('pangloss/vim-javascript')
 
 "Multiple cursors
 "call dein#add('terryma/vim-multiple-cursors')
@@ -88,7 +87,7 @@ call dein#add('rizzatti/dash.vim')
 call dein#add('ngmy/vim-rubocop')
 
 "Folding for RSpec
-call dein#add('vim-utils/vim-ruby-fold')
+"call dein#add('vim-utils/vim-ruby-fold')
 
 "Airline
 call dein#add('bling/vim-airline')
@@ -105,22 +104,24 @@ call dein#add('lambdatoast/elm.vim')
 
 call dein#add('shougo/unite.vim')
 
-""call dein#add('tsukkee/unite-tag')
+"call dein#add('tsukkee/unite-tag')
 
 call dein#add('Shougo/deoplete.nvim')
 
-"""call dein#add('OmniSharp/omnisharp-vim')
+call dein#add('fishbullet/deoplete-ruby')
+
+""call dein#add('OmniSharp/omnisharp-vim')
 "let g:OmniSharp_selector_ui = 'unite'
 
 call dein#add('tpope/vim-dispatch')
 
 call dein#add('fatih/vim-go')
 
-call dein#add('osyo-manga/vim-monster')
+"call dein#add('osyo-manga/vim-monster')
 
 call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 
-"""call dein#add('Konfekt/FastFold')
+""call dein#add('Konfekt/FastFold')
 
 "Vim solarized
 call dein#add('altercation/vim-colors-solarized')
@@ -134,6 +135,30 @@ call dein#add('thinca/vim-textobj-between')
 "Subvert for super charged substitutions
 call dein#add('tpope/vim-abolish')
 
+"Display a git gutter
+call dein#add('airblade/vim-gitgutter')
+
+"Support for elixir
+call dein#add('elixir-lang/vim-elixir')
+
+"Neovim dev environment for elixir
+call dein#add('awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' })
+
+"Neoterm
+call dein#add('kassio/neoterm')
+
+"Neomake
+call dein#add('neomake/neomake')
+
+"Surround changes
+call dein#add('tpope/vim-surround')
+
+"IndentWisely
+call dein#add('jeetsukumaran/vim-indentwise')
+
+"Indentation Text Object
+call dein#add('michaeljsmith/vim-indent-object')
+
 " Required:
 call dein#end()
 
@@ -144,7 +169,6 @@ filetype plugin indent on
 if dein#check_install()
   call dein#install()
 endif
-
 
 set nu
 set t_Co=256
@@ -178,7 +202,7 @@ set mouse=a
 
 "Background
 colorscheme solarized
-set background=dark
+set background=light
 highlight LineNr ctermfg=gray ctermbg=NONE
 
 set clipboard=unnamed
@@ -201,9 +225,9 @@ autocmd User GoyoLeave Limelight!
 "let g:mustache_abbreviations = 1
 
 "Gvimdiff shortcut
-"map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
-"map <silent> <leader>3 :diffget 3><CR> :diffupdate<CR>
-"map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
+map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
+map <silent> <leader>3 :diffget 3><CR> :diffupdate<CR>
+map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
 
 "ESC shortcut
 imap jj <Esc>
@@ -226,7 +250,7 @@ endif
 "Fuzzy finder
 set rtp+=/usr/local/opt/fzf
 
-"Rmap the temrianal emulator in neovim
+"Rmap the terminal emulator in neovim
 :tnoremap <Leader>e <C-\><C-n>
 
 set nohlsearch
@@ -285,7 +309,49 @@ function! s:tags()
 endfunction
 
 command! Tags call s:tags()
-nnoremap <Leader>t :Tags<cr>
+nnoremap <Leader>qt :Tags<cr>
+
+function! s:align_lists(lists)
+  let maxes = {}
+  for list in a:lists
+    let i = 0
+    while i < len(list)
+      let maxes[i] = max([get(maxes, i, 0), len(list[i])])
+      let i += 1
+    endwhile
+  endfor
+  return a:lists
+endfunction
+
+function! s:btags_source()
+  let lines = map(split(system(printf(
+        \ 'ctags -f - --sort=no ==excmd=number --language=force=%s %s',
+        \ &filetype, expand('%S'))), "\n"), 'split(v:val, "\t")')
+  if v:shell_error
+    throw 'failed to extract tags'
+  endif
+  return map(s:align_lists(lines), 'join(v:val, "\t")')
+endfunction
+
+function! s:btags_sink(line)
+  execute split(a:line, "\t")[2]
+endfunction
+
+function! s:btags()
+  try
+    call fzf#run({
+          \ 'source': s:btags_source(),
+          \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+          \ 'down': '40%',
+          \ 'sink': function('s:btags_sink()')})
+  catch
+    echohl WarningMsg
+    echom v:exception
+    echohl None
+  endtry
+endfunction
+
+command! BTags call s:btags()
 
 "if ! has('gui_running')
   "set ttimeoutlen=10
@@ -318,14 +384,14 @@ function! GetDebugTerm()
 endf
 
 function! SetDebugTerm()
-  let @s = 'puts "*" * 90;puts "#{' . g:term . '.inspect}";puts "*" * 90'
+  let @s = 'puts "*" * 90;puts ' . g:term . ';puts "*" * 90'
 endf
 
 function! PasteDebug()
   call GetDebugTerm()
   call SetDebugTerm()
   normal o
-  normal "sp
+  normal "sp=`]
 endf
 nnoremap <Leader>bb :call PasteDebug()<esc>:w<cr>
 
@@ -485,10 +551,10 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 inoremap <silent><expr> <C-j> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 inoremap <silent><expr> <C-k> pumvisible() ? "\<C-p>" : deoplete#mappings#manual_complete()
 
-" With deoplete.nvim
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-let g:deoplete#sources#omni#input_patterns = {
-\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+"" With deoplete.nvim
+"let g:monster#completion#rcodetools#backend = "async_rct_complete"
+"let g:deoplete#sources#omni#input_patterns = {
+"\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
 \}
 
 "Unite with Ag
@@ -510,3 +576,11 @@ endfunction
 " Set vimgrep to ag
 set grepprg=ag\ --vimgrep\ $*
 set grepformat=%f:%l:%c:%m
+
+" Say no to tokens
+nnoremap <leader>noauth oputs skip_filter :authenticate_user!<c-m>puts skip_filter :restrict_access<c-m>skip_authorization_check <esc>
+
+" Snap to previous or next line of similar indentation
+nnoremap <leader>s :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
+nnoremap <leader>a :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
+
