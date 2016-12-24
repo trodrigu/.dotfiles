@@ -45,7 +45,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git history frontend-search rails ruby)
+plugins=(git history frontend-search ruby)
 
 # User configuration
 
@@ -153,5 +153,32 @@ alias fix='git mergetool --tool=gvimdiff'
 # added by travis gem
 [ -f /Users/trodrigu/.travis/travis.sh ] && source /Users/trodrigu/.travis/travis.sh
 
+source ~/Code/release_scripts/release_script.sh
+source ~/Code/release_scripts/release_script_2.sh
+
 alias python=/usr/local/bin/python3
 alias ducks='du -cks * | sort -rn | head'
+
+# git recent
+grct() {
+  git reflog -n500 --pretty='%cr|%gs' --grep-reflog='checkout: moving' HEAD | {
+    seen=":"
+    git_dir="$(git rev-parse --git-dir)"
+    while read line; do
+      date="${line%%|*}"
+      branch="${line##* }"
+      if ! [[ $seen == *:"${branch}":* ]]; then
+        seen="${seen}${branch}:"
+        if [ -f "${git_dir}/refs/heads/${branch}" ]; then
+          printf "%s\t%s\n" "$date" "$branch"
+        fi
+      fi
+    done
+  }
+}
+
+alias cn='ccat config/customer_name.yml'
+alias cnc='nv config/customer_name.yml'
+
+alias gn='elixir git_next.exs'
+alias gp='elixir git_next.exs --gitprevious'
