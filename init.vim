@@ -165,6 +165,15 @@ call dein#add('slashmili/alchemist.vim')
 "Typescript syntax highlighting
 call dein#add('leafgarland/typescript-vim')
 
+"Subvert
+call dein#add('tpope/vim-abolish')
+
+"SugarSS
+call dein#add('hhsnopek/vim-sugarss')
+
+"Pug
+call dein#add('digitaltoad/vim-pug')
+
 " Required:
 call dein#end()
 
@@ -204,9 +213,10 @@ set listchars=tab:▸\ ,eol:¬,trail:.
 set history=1000
 
 "Allow copying
-set mouse=a 
+set mouse=a
 
 "Background
+syntax enable
 colorscheme solarized
 set background=dark
 highlight LineNr ctermfg=gray ctermbg=NONE
@@ -254,7 +264,7 @@ endif
 "nmap <silent> <RIGHT> :cnext<CR>
 "nmap <silent> <LEFT> :cprev<CR>
 "Fuzzy finder
-set rtp+=/usr/local/opt/fzf
+set rtp+=~/.fzf
 
 "Rmap the terminal emulator in neovim
 :tnoremap <Leader>e <C-\><C-n>
@@ -310,7 +320,7 @@ function! s:tags()
   \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
   \            ' | grep -v ^!',
   \ 'options':  '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
-  \ 'down':     '40%', 
+  \ 'down':     '40%',
   \ 'sink':     function('s:tags_sink')})
 endfunction
 
@@ -593,6 +603,54 @@ nnoremap <leader>a :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' .
 "Unite jump mapping
 nnoremap <leader>j :Unite jump<CR>
 
-let g:neomake_elixir_maker= { 'exe': 'elixir', 'args': ['-r'] } 
+let g:neomake_elixir_maker= { 'exe': 'elixir', 'args': ['-r'] }
 let g:neomake_elixir_enabled_makers = ['elixir']
 autocmd! BufWritePost * Neomake
+
+"nnoremap <space>/ :Unite ag --nogroup --nocolor --column
+
+function! s:fzf_statusline()
+  " Override the status line
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf1 ctermfg=23 ctermbg=251
+  highlight fzf1 ctermfg=231 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf#fz%#fzf3#f
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
+"autocmd! BufWritePost * Neomake
+
+"let g:neomake_middleman_maker = { 'exe': 'middleman', 'args': [ "build"] }
+
+" define elm-make maker
+"let g:neomake_elm_elmmake_maker = {
+  "\ 'exe': 'elm-make',
+  "\ 'args': ['--output=elm.js'],
+  "\ 'buffer_output': 1,
+  "\ 'errorformat':
+    "\ '%E%.%#--\ %m\ -%# %f' . ',' .
+    "\ '%C%l\\|' . ',' .
+    "\ '%C%.%#'
+"\ }
+
+ "define elm-make maker
+let g:neomake_elm_elmmake_maker = {
+  \ 'exe': 'elm-make',
+  \ 'args': ['--output=elm.js'],
+  \ 'buffer_output': 1,
+  \ 'errorformat':
+    \ '%E%.%#--\ %m\ -%# %f' . ',' .
+    \ '%C%l\\|' . ',' .
+    \ '%C%.%#'
+\ }
+
+" enable elm-make on elm
+let g:neomake_elm_enabled_makers = [ 'elmmake' ]
+
+"use neomake to build different files
+augroup neomake_neomake_build
+  autocmd! BufRead,BufWritePost *.elm Neomake elmmake
+  autocmd! BufRead,BufWritePost *.elm call neoterm#do('make')
+  autocmd! BufRead,BufWritePost * call neoterm#do('make')
+augroup end
