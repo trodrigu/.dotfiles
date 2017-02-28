@@ -74,8 +74,8 @@ call dein#add('isRuslan/vim-es6')
 "Mustache/Handlebars mode from vim
 call dein#add('mustache/vim-mustache-handlebars')
 
-"Integrate ag with vim
-call dein#add('rking/ag.vim')
+"Ack vim
+call dein#add('mileszs/ack.vim')
 
 "Slim template highlight
 call dein#add('slim-template/vim-slim')
@@ -159,6 +159,12 @@ call dein#add('jeetsukumaran/vim-indentwise')
 "Indentation Text Object
 call dein#add('michaeljsmith/vim-indent-object')
 
+"Elixir Alchemist
+call dein#add('slashmili/alchemist.vim')
+
+"Typescript syntax highlighting
+call dein#add('leafgarland/typescript-vim')
+
 " Required:
 call dein#end()
 
@@ -202,7 +208,7 @@ set mouse=a
 
 "Background
 colorscheme solarized
-set background=light
+set background=dark
 highlight LineNr ctermfg=gray ctermbg=NONE
 
 set clipboard=unnamed
@@ -236,12 +242,12 @@ imap jj <Esc>
 "set wildignore+=node_modules
 "set wildignore+=bower_components
 
-"Integrate ag
-let g:ag_prg= 'ag --nogroup --nocolor --column'
+"Integrate rg
+let g:ackprg= 'rg --vimgrep'
 
-if executable('ag')
+if executable('rg')
   " Note we extract the column as well as the file and line number
-  set grepprg=ag\ --nogroup\ --nocolor\ --column
+  set grepprg=rg
   set grepformat=%f:%l:%c%m
 endif
 
@@ -273,7 +279,7 @@ command! -nargs=1 Locate call fzf#run(
       \ {'source': 'locate <q-args>', 'sink': 'e', 'options': '-m'})
 
 "remap leader
-let mapleader = ","
+let mapleader = "SPC"
 noremap \ ,
 
 nnoremap <silent> <Leader>v :call fzf#run({
@@ -558,7 +564,7 @@ inoremap <silent><expr> <C-k> pumvisible() ? "\<C-p>" : deoplete#mappings#manual
 \}
 
 "Unite with Ag
-"nnoremap <space>/ :Unite ag --nogroup --nocolor --column
+"nnoremap <space>/ :Unite Ag --nogroup --nocolor --column
 
 " Toggle highlighting
 nnoremap <F4> :set hlsearch! hlsearch?<CR>
@@ -584,3 +590,9 @@ nnoremap <leader>noauth oputs skip_filter :authenticate_user!<c-m>puts skip_filt
 nnoremap <leader>s :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
 nnoremap <leader>a :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
 
+"Unite jump mapping
+nnoremap <leader>j :Unite jump<CR>
+
+let g:neomake_elixir_maker= { 'exe': 'elixir', 'args': ['-r'] } 
+let g:neomake_elixir_enabled_makers = ['elixir']
+autocmd! BufWritePost * Neomake

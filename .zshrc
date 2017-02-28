@@ -58,7 +58,6 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH="/usr/local/lib/node_modules:$PATH"
 export PATH=$PATH:/usr/local/go/bin
 export NVM_DIR=$(brew --prefix)/var/nvm
-source $(brew --prefix nvm)/nvm.sh
 export EDITOR=nvim
 source $ZSH/oh-my-zsh.sh
 export PATH="/usr/local/apache-maven-3.3.3/bin:$PATH"
@@ -182,3 +181,18 @@ alias cnc='nv config/customer_name.yml'
 
 alias gn='elixir git_next.exs'
 alias gp='elixir git_next.exs --gitprevious'
+
+fs() {
+  local session
+  session=$(tmux list-sessions -F "#{session_name}" | \
+  fzf --query="$1" --select-1 --exit-0) &&
+  tmux switch-client -t "$session"
+} 
+
+# fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch -vv) &&
+  branch=$(echo "$branches" | fzf +m) &&
+  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}

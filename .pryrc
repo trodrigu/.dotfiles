@@ -1,9 +1,9 @@
 # == Pry-Nav - Using pry as a debugger ==
 if defined?(PryByeBug)
   Pry.commands.alias_command 'c', 'continue'
-  Pry.commands.alias_command 'c', 'stop'
-  Pry.commands.alias_command 'c', 'next'
-  Pry.commands.alias_command 'c', 'finish'
+  Pry.commands.alias_command 's', 'stop'
+  Pry.commands.alias_command 'n', 'next'
+  Pry.commands.alias_command 'f', 'finish'
 end
 
 Pry::Commands.command /^$/, 'repeat last command' do
@@ -67,3 +67,4 @@ default_command_set = Pry::CommandSet.new do
 end
 
 Pry.config.commands.import default_command_set
+Pry.config.pager = false
