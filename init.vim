@@ -603,10 +603,6 @@ nnoremap <leader>a :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' .
 "Unite jump mapping
 nnoremap <leader>j :Unite jump<CR>
 
-let g:neomake_elixir_maker= { 'exe': 'elixir', 'args': ['-r'] }
-let g:neomake_elixir_enabled_makers = ['elixir']
-autocmd! BufWritePost * Neomake
-
 "nnoremap <space>/ :Unite ag --nogroup --nocolor --column
 
 function! s:fzf_statusline()
@@ -618,39 +614,3 @@ function! s:fzf_statusline()
 endfunction
 
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
-
-"autocmd! BufWritePost * Neomake
-
-"let g:neomake_middleman_maker = { 'exe': 'middleman', 'args': [ "build"] }
-
-" define elm-make maker
-"let g:neomake_elm_elmmake_maker = {
-  "\ 'exe': 'elm-make',
-  "\ 'args': ['--output=elm.js'],
-  "\ 'buffer_output': 1,
-  "\ 'errorformat':
-    "\ '%E%.%#--\ %m\ -%# %f' . ',' .
-    "\ '%C%l\\|' . ',' .
-    "\ '%C%.%#'
-"\ }
-
- "define elm-make maker
-let g:neomake_elm_elmmake_maker = {
-  \ 'exe': 'elm-make',
-  \ 'args': ['--output=elm.js'],
-  \ 'buffer_output': 1,
-  \ 'errorformat':
-    \ '%E%.%#--\ %m\ -%# %f' . ',' .
-    \ '%C%l\\|' . ',' .
-    \ '%C%.%#'
-\ }
-
-" enable elm-make on elm
-let g:neomake_elm_enabled_makers = [ 'elmmake' ]
-
-"use neomake to build different files
-augroup neomake_neomake_build
-  autocmd! BufRead,BufWritePost *.elm Neomake elmmake
-  autocmd! BufRead,BufWritePost *.elm call neoterm#do('make')
-  autocmd! BufRead,BufWritePost * call neoterm#do('make')
-augroup end

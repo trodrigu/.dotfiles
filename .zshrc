@@ -152,8 +152,8 @@ alias fix='git mergetool --tool=gvimdiff'
 # added by travis gem
 [ -f /Users/$USER/.travis/travis.sh ] && source /Users/$USER/.travis/travis.sh
 
-source ~/Code/release_scripts/release_script.sh
-source ~/Code/release_scripts/release_script_2.sh
+# source ~/Code/release_scripts/release_script.sh
+# source ~/Code/release_scripts/release_script_2.sh
 
 alias python=/usr/local/bin/python3
 alias ducks='du -cks * | sort -rn | head'
@@ -196,3 +196,7 @@ fbr() {
   branch=$(echo "$branches" | fzf +m) &&
   git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
+
+export NVM_DIR="/usr/local/var/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+export GUARDIAN_SECRET_KEY='duIaK6Gn5QX0PSDK4j+IM3Ll02JwbNRN66N+5Iihnop7iPKj8VUpQVGmqojVeXmo'
