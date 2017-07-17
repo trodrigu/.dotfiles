@@ -68,3 +68,4 @@ end
 
 Pry.config.commands.import default_command_set
 Pry.config.pager = false
+Pry.config.editor = 'emacs'
