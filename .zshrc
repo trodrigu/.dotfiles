@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/thomas/.oh-my-zsh
+export ZSH=/Users/$USER/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -50,7 +50,7 @@ plugins=(git history frontend-search ruby)
 # User configuration
 
 # Install z
-. "/Users/thomas/.oh-my-zsh/plugins/z/z.sh"
+. "/Users/$USER/.oh-my-zsh/plugins/z/z.sh"
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -138,7 +138,7 @@ source ~/.iterm2_shell_integration.`basename $SHELL`
 # Docker
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://192.168.99.100:2376"
-export DOCKER_CERT_PATH="/Users/thomas/.docker/machine/machines/dev"
+export DOCKER_CERT_PATH="/Users/$USER/.docker/machine/machines/dev"
 export DOCKER_MACHINE_NAME="dev"
 # Run this command to configure your shell:
 # eval "$(docker-machine env dev)"
@@ -147,10 +147,10 @@ export DOCKER_MACHINE_NAME="dev"
 #alias fix='git diff --name-only | uniq | xargs $EDITOR'
 alias fix='git mergetool --tool=gvimdiff'
 
-[ -s "/Users/thomas/.dnx/dnvm/dnvm.sh" ] && . "/Users/thomas/.dnx/dnvm/dnvm.sh" # Load dnvm
+[ -s "/Users/$USER/.dnx/dnvm/dnvm.sh" ] && . "/Users/$USER/.dnx/dnvm/dnvm.sh" # Load dnvm
 
 # added by travis gem
-[ -f /Users/thomas/.travis/travis.sh ] && source /Users/thomas/.travis/travis.sh
+[ -f /Users/$USER/.travis/travis.sh ] && source /Users/$USER/.travis/travis.sh
 
 source ~/Code/release_scripts/release_script.sh
 source ~/Code/release_scripts/release_script_2.sh
