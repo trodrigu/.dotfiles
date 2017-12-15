@@ -136,10 +136,10 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 source ~/.iterm2_shell_integration.`basename $SHELL`
 
 # Docker
-export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.100:2376"
-export DOCKER_CERT_PATH="/Users/$USER/.docker/machine/machines/dev"
-export DOCKER_MACHINE_NAME="dev"
+# export DOCKER_TLS_VERIFY="1"
+# export DOCKER_HOST="tcp://192.168.99.100:2376"
+# export DOCKER_CERT_PATH="/Users/$USER/.docker/machine/machines/dev"
+# export DOCKER_MACHINE_NAME="dev"
 # Run this command to configure your shell:
 # eval "$(docker-machine env dev)"
 
@@ -200,3 +200,8 @@ fbr() {
 export NVM_DIR="/usr/local/var/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 export GUARDIAN_SECRET_KEY='duIaK6Gn5QX0PSDK4j+IM3Ll02JwbNRN66N+5Iihnop7iPKj8VUpQVGmqojVeXmo'
+export PATH="/usr/local/opt/erlang@18/bin:$PATH"
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
