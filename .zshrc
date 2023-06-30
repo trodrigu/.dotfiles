@@ -1,20 +1,39 @@
-# Path to your oh-my-zsh installation.
-export ZSH=/Users/$USER/.oh-my-zsh
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/thomas/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
 # Uncomment the following line to disable bi-weekly auto-update checks.
- #DISABLE_AUTO_UPDATE="true"
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -26,59 +45,51 @@ ZSH_THEME="robbyrussell"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
- COMPLETION_WAITING_DOTS="true"
+# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
+# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
+# COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
- DISABLE_UNTRACKED_FILES_DIRTY="true"
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
- HIST_STAMPS="mm/dd/yyyy"
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git history frontend-search ruby)
+plugins=(git asdf)
+
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# Install z
-. "/Users/$USER/.oh-my-zsh/plugins/z/z.sh"
-
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
-#export PATH="/usr/local/share/npm/bin:$PATH"
-export PATH="/usr/local/lib/node_modules:$PATH"
-export PATH=$PATH:/usr/local/go/bin
-export NVM_DIR=$(brew --prefix)/var/nvm
-export EDITOR=nvim
-source $ZSH/oh-my-zsh.sh
-export PATH="/usr/local/apache-maven-3.3.3/bin:$PATH"
-export PATH="/Library/Python/2.7/bin"
-export GOPATH=$HOME/Code/golang
-export PATH=/Library/Frameworks/Python.framework/Versions/3.3/bin:$PATH
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='nvim'
- fi
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -88,120 +99,52 @@ export PATH=/Library/Frameworks/Python.framework/Versions/3.3/bin:$PATH
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias f="open -a finder"
-alias m="mvim"
-alias tx="open -a /Applications/TeX/TeXShop.App"
-alias gprune="git branch -r | awk '{print \$1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print \$1}' | xargs git branch -d"
-alias ta="ctags --exclude=*.html --exclude=*.js --exclude=*.css --exclude=*.scss -R"
-
-# Mactex path
-eval `/usr/libexec/path_helper -s`
-
-# Sublime alias
-alias sub="subl"
-
-# alias bundle exec
-alias be="bundle exec"
-
-# Gems path
-if which ruby >/dev/null && which gem >/dev/null; then
-  PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
-fi
-
-# Rbenv path, make sure this is below gems path
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
-export PATH="$HOME/.bin:$PATH"
-eval "$(rbenv init - --no-rehash zsh)"
-
-# Hub path
-eval "$(hub alias -s)"
-
-# Set environment variable for true colour in Neovim
-#alias v='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
-#alias vim='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
-alias nv='nvim'
-
-# Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='
-  (git ls-tree -r --name-only HEAD ||
-   find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
-   sed s/^..//) 2> /dev/null'
+#export PATH="$PATH:/Users/thomas/.asdf/installs/elixir/1.12.1/bin"
+#export PATH="$PATH:/Users/thomas/.asdf/installs/erlang/23.3.4.4/bin"
 
-test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
-# Iterm2 shell integration
-source ~/.iterm2_shell_integration.`basename $SHELL`
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/thomas/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/thomas/google-cloud-sdk/path.zsh.inc'; fi
 
-# Docker
-# export DOCKER_TLS_VERIFY="1"
-# export DOCKER_HOST="tcp://192.168.99.100:2376"
-# export DOCKER_CERT_PATH="/Users/$USER/.docker/machine/machines/dev"
-# export DOCKER_MACHINE_NAME="dev"
-# Run this command to configure your shell:
-# eval "$(docker-machine env dev)"
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/thomas/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/thomas/google-cloud-sdk/completion.zsh.inc'; fi
 
-# Merge conflicts
-#alias fix='git diff --name-only | uniq | xargs $EDITOR'
-alias fix='git mergetool --tool=gvimdiff'
+POWERLEVEL9K_CUSTOM_LIVE_BACKGROUND="red"
+POWERLEVEL9K_CUSTOM_LIVE_FOREGROUND="white"
+POWERLEVEL9K_MODE="nerdfont-complete"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(custom_live host dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs load ram disk_usage time)
+#ZSH_THEME="powerlevel9k/powerlevel9k"
 
-[ -s "/Users/$USER/.dnx/dnvm/dnvm.sh" ] && . "/Users/$USER/.dnx/dnvm/dnvm.sh" # Load dnvm
-
-# added by travis gem
-[ -f /Users/$USER/.travis/travis.sh ] && source /Users/$USER/.travis/travis.sh
-
-# source ~/Code/release_scripts/release_script.sh
-# source ~/Code/release_scripts/release_script_2.sh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias python=/usr/local/bin/python3
-alias ducks='du -cks * | sort -rn | head'
+alias pip=/usr/local/bin/pip3
 
-# git recent
-grct() {
-  git reflog -n500 --pretty='%cr|%gs' --grep-reflog='checkout: moving' HEAD | {
-    seen=":"
-    git_dir="$(git rev-parse --git-dir)"
-    while read line; do
-      date="${line%%|*}"
-      branch="${line##* }"
-      if ! [[ $seen == *:"${branch}":* ]]; then
-        seen="${seen}${branch}:"
-        if [ -f "${git_dir}/refs/heads/${branch}" ]; then
-          printf "%s\t%s\n" "$date" "$branch"
-        fi
-      fi
-    done
-  }
-}
+#. /usr/local/opt/asdf/asdf.sh
 
-alias cn='ccat config/customer_name.yml'
-alias cnc='nv config/customer_name.yml'
+#. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
 
-alias gn='elixir git_next.exs'
-alias gp='elixir git_next.exs --gitprevious'
+#. /usr/local/opt/asdf/libexec/asdf.sh
+PATH="/Applications/CMake.app/Contents/bin":"$PATH"
 
-fs() {
-  local session
-  session=$(tmux list-sessions -F "#{session_name}" | \
-  fzf --query="$1" --select-1 --exit-0) &&
-  tmux switch-client -t "$session"
-}
+#alias lg=lazygit
+export PATH=$PATH:./node_modules/.bin
+export PATH=$PATH:/Users/thomas/elixir-ls/updated-release
 
-# fbr - checkout git branch
-fbr() {
-  local branches branch
-  branches=$(git branch -vv) &&
-  branch=$(echo "$branches" | fzf +m) &&
-  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
-}
 
-export NVM_DIR="/usr/local/var/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-export GUARDIAN_SECRET_KEY='duIaK6Gn5QX0PSDK4j+IM3Ll02JwbNRN66N+5Iihnop7iPKj8VUpQVGmqojVeXmo'
-export PATH="/usr/local/opt/erlang@18/bin:$PATH"
+export PATH="/usr/local/bin:${PATH}"
+
+#. ~/.asdf/plugins/java/set-java-home.zsh
+
+export PATH=$PATH:/Users/thomas/Library/Python/3.9/bin/
+export PATH="/usr/local/opt/openssl@3/bin:$PATH"
 
 . $HOME/.asdf/asdf.sh
-
 . $HOME/.asdf/completions/asdf.bash
+
+source "$HOME/.vim/bundle/gruvbox/gruvbox_256palette.sh"
+export PATH="/usr/local/opt/libpq/bin:$PATH"
