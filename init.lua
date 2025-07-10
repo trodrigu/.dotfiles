@@ -1,6 +1,5 @@
 require("config.lazy")
 --vim.cmd [[packadd packer.nvim]]
-
 --local startup = require("packer").startup
 
 --startup(function(use)
@@ -172,8 +171,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 elixir.setup {
   nextls = {
     enable = false, -- defaults to false
-    port = 9001, -- connect via TCP with the given port. mutually exclusive with `cmd`. defaults to nil
-    ----cmd = "/Users/thomas/Code/next-ls/bin/nextls", -- path to the executable. mutually exclusive with `port`
+    --port = 9001, -- connect via TCP with the given port. mutually exclusive with `cmd`. defaults to nil
+    cmd = "/opt/homebrew/bin/nextls", -- path to the executable. mutually exclusive with `port`
     ----version = "0.5.0", -- version of Next LS to install and use. defaults to the latest version
     --on_attach = function(client, bufnr)
       -- custom keybinds
@@ -183,7 +182,7 @@ elixir.setup {
     --end
   },
   credo = {
-    --enable = true, -- defaults to true
+    enable = false, -- defaults to true
     --port = 9000, -- connect via TCP with the given port. mutually exclusive with `cmd`. defaults to nil
     --cmd = "path/to/credo-language-server", -- path to the executable. mutually exclusive with `port`
     --version = "0.1.0-rc.3", -- version of credo-language-server to install and use. defaults to the latest release
@@ -195,7 +194,7 @@ elixir.setup {
     end
   },
   elixirls = {
-    enable = true,
+    enable = false,
     -- specify a repository and branch
     --repo = "mhanberg/elixir-ls", -- defaults to elixir-lsp/elixir-ls
     --branch = "mh/all-workspace-symbols", -- defaults to nil, just checkouts out the default branch, mutually exclusive with the `tag` option
@@ -223,6 +222,7 @@ elixir.setup {
 
 vim.cmd([[
   let mapleader = " "
+  let maplocalleader =","
   let test#strategy = "neovim"
   let test#elixir#runner = "ex_unit"
 ]])
@@ -241,12 +241,9 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 --})
 require("codecompanion").setup({
   tools = {
-    -- Include existing tools
     "cmd_runner",
     "editor",
     "files",
-    -- Add your custom tool
-    "pr_helper"
   },
   strategies = {
     chat = {
@@ -255,6 +252,67 @@ require("codecompanion").setup({
     inline = {
       adapter = "anthropic",
     },
+  },
+  prompt_library = {
+    ["Send PR"] = {
+      strategy = "workflow",
+      description = "Submits a PR by diff'ing from develop to my current branch",
+      opts = {
+        index = 5,
+        auto_submit = false,
+        is_default = true,
+        short_name = "spr"
+      },
+      prompts = {
+        {
+          {
+            name = "Get patches file",
+            role = "user",
+            content = "use @cmd_runner tool to run `git diff develop > changes.patch && cat changes.patch`"
+
+          },
+          {
+            name = "Create summary",
+            role = "user",
+            content = "use @full_stack_dev to create summary file derived from changes.patch which summarizes changes"
+              --return [[### Instructions
+--1. use @cmd_runner tool to run `git stash --include-untracked`
+--2. use @cmd_runner tool to run `git diff develop > changes.patch` and take note of output
+--3. use @create_file to create `summary` file
+--4. use @editor to fill in summary with a summary of the changes.patch and make sure to use a format like (remember this is just an example so use the generalize this)
+--```
+--Security Patch: Fix Erlang SSH Vulnerability (CVE-2025-32433)
+--Overview
+--This PR patches the critical vulnerability in Erlang/OTP SSH (CVE-2025-32433) by replacing the vulnerable SSH component with the patched version from OTP-25.3.2.20.
+
+--Changes
+--Security Patch Implementation: Added patching process that replaces the vulnerable SSH module with version 4.15.3.12 from OTP-25.3.2.20
+--Version Verification: Added Erlang version verification that confirms the SSH module has been successfully patched
+--Documentation: Added verification file that provides detailed information about the Erlang runtime versions
+--Security Details
+--CVE ID: CVE-2025-32433
+--Severity: Critical (CVSS 10.0)
+--Impact: Unauthenticated remote code execution through SSH
+--Fixed Version: SSH 4.15.3.12 (from OTP-25.3.2.20)
+--Implementation Approach
+--Rather than rebuilding the entire Erlang/OTP system, this PR uses a targeted approach that only replaces the vulnerable SSH component. This minimizes changes to the stable runtime environment while ensuring the security vulnerability is addressed.
+
+--Verification
+--The patch adds a verification file (/opt/app/erlang_versions.txt) to the final image that shows:
+
+--Base Erlang/OTP version
+--Patched SSH module version
+--Confirmation that CVE-2025-32433 has been mitigated
+--Run the following command to verify the patch:
+
+--docker run --rm image:tag cat /opt/app/erlang_versions.txt
+--```]]
+            --end,
+
+          },
+        },
+      }
+    }
   },
   init = function()
     vim.cmd([[cab cc CodeCompanion]])
@@ -271,7 +329,7 @@ require("codecompanion").setup({
             mode = { "n", "v" },
           },
           {
-            "<LocalLeader>a",
+            "<C-c>",
             "<cmd>CodeCompanionChat Toggle<CR>",
             description = "Toggle a chat buffer",
             mode = { "n", "v" },
@@ -296,20 +354,23 @@ require("codecompanion").setup({
           },
           schema = {
             model = {
-              default = "claude-3-sonnet-20240229",
+              default = "claude-3-5-haiku-20241022",
             },
           },
         })
       end,
-      copilot = function()
-        return require("codecompanion.adapters").extend("copilot", {
-          schema = {
-            model = {
-              default = "claude-3.7-sonnet",
-            },
-          },
-        })
-      end,
+      --copilot = function()
+        --return require("codecompanion.adapters").extend("copilot", {
+          --schema = {
+            --model = {
+              --default = "claude-3.7-sonnet",
+            --},
+            --extended_thinking = {
+              --default = false
+            --}
+          --},
+        --})
+      --end,
       --deepseek = function()
         --return require("codecompanion.adapters").extend("deepseek", {
           --env = {
@@ -350,23 +411,24 @@ require("codecompanion").setup({
           },
         })
       end,
-      --openai = function()
-        --return require("codecompanion.adapters").extend("openai", {
-          --opts = {
-            --stream = true,
-          --},
-          --env = {
+      openai = function()
+        return require("codecompanion.adapters").extend("openai", {
+          opts = {
+            stream = true,
+          },
+          env = {
             --api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
-          --},
-          --schema = {
-            --model = {
-              --default = function()
-                --return "gpt-4o"
-              --end,
-            --},
-          --},
-        --})
-      --end,
+            api_key = vim.env.OPENAI_API_KEY or "",
+          },
+          schema = {
+            model = {
+              default = function()
+                return "gpt-4o"
+              end,
+            },
+          },
+        })
+      end,
       --xai = function()
         --return require("codecompanion.adapters").extend("xai", {
           --env = {
@@ -506,12 +568,67 @@ I'm also sharing my `config.lua` file which I'm mapping to the `configuration` s
           },
         },
       },
+      ["Send PR"] = {
+        strategy = "workflow",
+        description = "Submits a PR by diff'ing from develop to my current branch",
+        opts = {
+          index = 5,
+          auto_submit = false,
+          is_default = true,
+          short_name = "spr"
+        },
+        prompts = {
+          {
+            {
+              name = "Generate Diff",
+              role = "user",
+              content = function()
+
+                return [[### Instructions
+- use @{cmd_runner} tool to run `git stash --include-untracked`
+- use @{cmd_runner} tool to run `git diff develop > changes.patch` and take note of output
+- use @{insert_edit_into_file} tool to create a new file called summary
+- use summary file to summarize changes in a Github markdown format into summary
+- make sure to use format like (remember this is just an example so use the headers)
+Security Patch: Fix Erlang SSH Vulnerability (CVE-2025-32433)
+Overview
+This PR patches the critical vulnerability in Erlang/OTP SSH (CVE-2025-32433) by replacing the vulnerable SSH component with the patched version from OTP-25.3.2.20.
+
+Changes
+Security Patch Implementation: Added patching process that replaces the vulnerable SSH module with version 4.15.3.12 from OTP-25.3.2.20
+Version Verification: Added Erlang version verification that confirms the SSH module has been successfully patched
+Documentation: Added verification file that provides detailed information about the Erlang runtime versions
+Security Details
+CVE ID: CVE-2025-32433
+Severity: Critical (CVSS 10.0)
+Impact: Unauthenticated remote code execution through SSH
+Fixed Version: SSH 4.15.3.12 (from OTP-25.3.2.20)
+Implementation Approach
+Rather than rebuilding the entire Erlang/OTP system, this PR uses a targeted approach that only replaces the vulnerable SSH component. This minimizes changes to the stable runtime environment while ensuring the security vulnerability is addressed.
+
+Verification
+The patch adds a verification file (/opt/app/erlang_versions.txt) to the final image that shows:
+
+Base Erlang/OTP version
+Patched SSH module version
+Confirmation that CVE-2025-32433 has been mitigated
+Run the following command to verify the patch:
+
+docker run --rm image:tag cat /opt/app/erlang_versions.txt
+- use @{cmd_runner} tool to run gh pr create --repo algorocom/securitytrails_api -F summary to create PR
+- use @{cmd_runner} to accept all defaults
+- make sure to trigger both tools in response]]
+              end,
+            },
+          },
+        }
+      }
     },
     strategies = {
       chat = {
-        adapter = "copilot",
+        adapter = "anthropic",
         roles = {
-          user = "olimorris",
+          user = "thomas",
         },
         keymaps = {
           send = {
@@ -550,11 +667,15 @@ I'm also sharing my `config.lua` file which I'm mapping to the `configuration` s
           },
         },
       },
-      inline = { adapter = "copilot" },
+      inline = { adapter = "anthropic" },
     },
     display = {
       action_palette = {
         provider = "default",
+        opts = {
+          show_default_actions = true,
+          show_default_prompt_library = true
+        }
       },
       chat = {
         -- show_references = true,
@@ -566,6 +687,56 @@ I'm also sharing my `config.lua` file which I'm mapping to the `configuration` s
       },
     },
   },
+  extensions = {
+     mcphub = {
+      callback = "mcphub.extensions.codecompanion",
+      opts = {
+        show_result_in_chat = true,  -- Show mcp tool results in chat
+        make_vars = true,            -- Convert resources to #variables
+        make_slash_commands = true,  -- Add prompts as /slash commands
+      }
+    },
+    vectorcode = {
+      ---@type VectorCode.CodeCompanion.ExtensionOpts
+      opts = { 
+        tool_group = {
+          -- this will register a tool group called `@vectorcode_toolbox` that contains all 3 tools
+          enabled = true,
+          -- a list of extra tools that you want to include in `@vectorcode_toolbox`.
+          -- if you use @vectorcode_vectorise, it'll be very handy to include
+          -- `file_search` here.
+          extras = {}, 
+          collapse = false, -- whether the individual tools should be shown in the chat
+        },
+        tool_opts = {
+          ---@type VectorCode.CodeCompanion.ToolOpts
+          ["*"] = {},
+          ---@type VectorCode.CodeCompanion.LsToolOpts
+          ls = {},
+          ---@type VectorCode.CodeCompanion.VectoriseToolOpts
+          vectorise = {},
+          ---@type VectorCode.CodeCompanion.QueryToolOpts
+          query = {
+            max_num = { chunk = -1, document = -1 },
+            default_num = { chunk = 50, document = 10 },
+            include_stderr = false,
+            use_lsp = false,
+            no_duplicate = true,
+            chunk_mode = false,
+            ---@type VectorCode.CodeCompanion.SummariseOpts
+            summarise = {
+              ---@type boolean|(fun(chat: CodeCompanion.Chat, results: VectorCode.QueryResult[]):boolean)|nil
+              enabled = true,
+              adapter = "",
+              query_augmented = true,
+            }
+          },
+          files_ls = {},
+          files_rm = {}
+        } 
+      },
+    },
+  }
 })
 --})
 
@@ -646,7 +817,6 @@ lspconfig.hls.setup {
   on_attach = on_attach
   --rootPatterns = { "hie.yaml", "*.cabal", "stack.yaml", "package.yaml", "cabal.project" }
 }
-
 
 vim.o.nu=true
 
@@ -796,7 +966,7 @@ require'nvim-tree'.setup {
 
   view = {
     -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
-    width = 5,
+    width = 60,
     -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
     side = 'left',
   },
@@ -1070,3 +1240,51 @@ end
 --map("x", "il", ":<C-u>norm! _vg_<cr>", { desc = "Line text object" })
 --map("o", "al", ":<C-u>norm! 0v$<cr>", { desc = "Line text object" })
 --map("o", "il", ":<C-u>norm! _vg_<cr>", { desc = "Line text object" })
+
+require('lspconfig').nextls.setup({
+  cmd = { "nextls", "--stdio" },
+  init_options = {
+    extensions = {
+      credo = { enable = true }
+    },
+    experimental = {
+      completions = { enable = true }
+    }
+  },
+  on_attach = function(client, bufnr)
+    -- your on_attach function
+  end
+})
+
+-- Default configuration
+require("vectorcode").setup(
+  ---@type VectorCode.Opts
+  {
+    cli_cmds = {
+      vectorcode = "vectorcode",
+    },
+    ---@type VectorCode.RegisterOpts
+    async_opts = {
+      debounce = 10,
+      events = { "BufWritePost", "InsertEnter", "BufReadPost" },
+      exclude_this = true,
+      n_query = 1,
+      notify = false,
+      query_cb = require("vectorcode.utils").make_surrounding_lines_cb(-1),
+      run_on_register = false,
+    },
+    async_backend = "default", -- or "lsp"
+    exclude_this = true,
+    n_query = 1,
+    notify = true,
+    timeout_ms = 5000,
+    on_setup = {
+      update = false, -- set to true to enable update when `setup` is called.
+      lsp = false,
+    },
+    sync_log_env_var = false,
+    ---@class VectorCode.CodeCompanion.SummariseOpts
+    enabled = true,
+    adapter = "openai"
+  }
+)

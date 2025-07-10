@@ -31,6 +31,35 @@ end
 require("lazy").setup({
   spec = {
     { "elixir-tools/elixir-tools.nvim", dependencies = {"nvim-lua/plenary.nvim"}},
+    {
+      "mhanberg/output-panel.nvim",
+      version = "*",
+      event = "VeryLazy",
+      config = function()
+        require("output_panel").setup({
+          max_buffer_size = 5000 -- default
+        })
+      end,
+      cmd = { "OutputPanel" },
+      keys = {
+        {
+          "<leader>o",
+          vim.cmd.OutputPanel,
+          mode = "n",
+          desc = "Toggle the output panel",
+        },
+      }
+    },
+    {
+    "ravitemer/mcphub.nvim",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
+    build = "npm install -g mcp-hub@latest",  -- Installs `mcp-hub` node binary globally
+    config = function()
+        require("mcphub").setup()
+    end
+    },
     {"neovim/nvim-lspconfig"},
     {"hrsh7th/cmp-nvim-lsp"},
     {"hrsh7th/cmp-buffer"},
@@ -48,7 +77,7 @@ require("lazy").setup({
     {"michaeljsmith/vim-indent-object"},
     {"scrooloose/nerdcommenter"},
     {"godlygeek/tabular"},
-    {"nvim-treesitter/nvim-treesitter"},
+    {"nvim-treesitter/nvim-treesitter", branch = 'master', lazy = false, build = ":TSUpdate"},
     {"nvim-treesitter/nvim-treesitter-textobjects"},
     {
       "nvim-tree/nvim-tree.lua",
@@ -305,7 +334,7 @@ require("lazy").setup({
   {
     "Davidyz/VectorCode",
     version = "*",
-    build = "pipx upgrade vectorcode",
+    build = "uv tool upgrade vectorcode",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
   {
